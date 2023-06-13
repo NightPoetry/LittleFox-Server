@@ -1,5 +1,5 @@
 # LittleFox-Server
-a small web serverï¼Œcan use cli or api to run.
+a small web server, can use cli or api to run.
 ## Init£¨³õÊ¼»¯£©
  ```bash
  $ npm init
