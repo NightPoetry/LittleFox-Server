@@ -1,5 +1,5 @@
 # LittleFox-Server
-a small web server锛宑an use cli or api to run.
+a small web server,can use cli or api to run.
 ## 控制台命令行工具
 
 这是一个基于控制台的命令行工具，支持以下两个指令：
