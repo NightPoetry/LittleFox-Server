@@ -1,85 +1,85 @@
 # LittleFox-Server
-a small web server，can use cli or api to run.
-## ����̨�����й���
+a small web server锛宑an use cli or api to run.
+## 控制台命令行工具
 
-����һ�����ڿ���̨�������й��ߣ�֧����������ָ�
+这是一个基于控制台的命令行工具，支持以下两个指令：
 
-- `remote`: Զ�̺���������������һ���ļ���·����һ���˿ں���Ϊ����������һ��Զ�̺���������������ָ���˿ڣ�����ָ���ļ���·����Ѱ�Һ�����ִ�С�
-- `server`: ��̬�ļ�������������һ���ļ���·����һ���˿ںź�һ��Ĭ����ҳ·����Ϊ����������һ����̬�ļ�������������ָ���˿ڣ�����ָ���ļ���·����Ѱ���ļ������ظ������ߡ���������·����һ��Ŀ¼����ָ��Ŀ¼�е���ҳ�������ָ����ҳ��ʹ��Ĭ����ҳ��
+- `remote`: 远程函数服务器，接收一个文件夹路径和一个端口号作为参数，启动一个远程函数服务器，监听指定端口，并在指定文件夹路径下寻找函数并执行。
+- `server`: 静态文件服务器，接收一个文件夹路径、一个端口号和一个默认主页路径作为参数，启动一个静态文件服务器，监听指定端口，并在指定文件夹路径下寻找文件并返回给请求者。如果请求的路径是一个目录，请指定目录中的主页，如果不指定主页则使用默认主页。
 
-### ʹ�÷���
+### 使用方法
 
-����ͨ������̨��������ָ����ʹ�øù��ߣ�
+可以通过控制台输入以下指令来使用该工具：
 
 ```bash
 $ node Main.js remote -d /path/to/dir -p 8080
 ```
 
-�����ָ�������һ��Զ�̺��������������� 8080 �˿ڣ����� `/path/to/dir` Ŀ¼��Ѱ�Һ�����ִ�С�
+上面的指令会启动一个远程函数服务器，监听 8080 端口，并在 `/path/to/dir` 目录下寻找函数并执行。
 
 ```bash
 $ node cli.js server -d /path/to/dir -p 8080 -h /path/to/default/homepage.html
 ```
 
-�����ָ�������һ����̬�ļ������������� 8080 �˿ڣ����� `/path/to/dir` Ŀ¼��Ѱ���ļ������ظ������ߡ���������·����һ��Ŀ¼���򷵻� `/path/to/default/homepage.html` �ļ���
+上面的指令会启动一个静态文件服务器，监听 8080 端口，并在 `/path/to/dir` 目录下寻找文件并返回给请求者。如果请求的路径是一个目录，则返回 `/path/to/default/homepage.html` 文件。
 
-### ָ�����˵��
+### 指令参数说明
 
-#### `remote` ָ��
+#### `remote` 指令
 
-- `-d, --dir_path`: �����������ʾ�ļ���·����
-- `-p, --port`: ��ѡ��������ʾ�˿ںţ�Ĭ��Ϊ `26688`��
+- `-d, --dir_path`: 必填参数，表示文件夹路径。
+- `-p, --port`: 可选参数，表示端口号，默认为 `26688`。
 
-#### `server` ָ��
+#### `server` 指令
 
-- `-d, --dir_path`: �����������ʾ�ļ���·����
-- `-p, --port`: ��ѡ��������ʾ�˿ںţ�Ĭ��Ϊ `80`��
-- `-h, --default_homepage`: ��ѡ��������ʾĬ����ҳ·����Ĭ��Ϊ `index.html`��
+- `-d, --dir_path`: 必填参数，表示文件夹路径。
+- `-p, --port`: 可选参数，表示端口号，默认为 `80`。
+- `-h, --default_homepage`: 可选参数，表示默认主页路径，默认为 `index.html`。
 
-### ����˵��
+### 函数说明
 
 #### `RemoteFunctionServer(port, path)`
 
-- `port`: �����������ʾ�˿ںš�
-- `path`: �����������ʾ�ļ���·����
+- `port`: 必填参数，表示端口号。
+- `path`: 必填参数，表示文件夹路径。
 
-�ú�������һ��Զ�̺���������������ָ���˿ڣ�����ָ���ļ���·����Ѱ�Һ�����ִ�С�
+该函数启动一个远程函数服务器，监听指定端口，并在指定文件夹路径下寻找函数并执行。
 
 #### `AddServer(port, dir_path, default_homepage)`
 
-- `port`: �����������ʾ�˿ںš�
-- `dir_path`: �����������ʾ�ļ���·����
-- `default_homepage`: ��ѡ��������ʾĬ����ҳ·����Ĭ��Ϊ `index.html`��
+- `port`: 必填参数，表示端口号。
+- `dir_path`: 必填参数，表示文件夹路径。
+- `default_homepage`: 可选参数，表示默认主页路径，默认为 `index.html`。
 
-�ú�������һ����̬�ļ�������������ָ���˿ڣ�����ָ���ļ���·����Ѱ���ļ������ظ������ߡ���������·����һ��Ŀ¼���򷵻�Ĭ����ҳ��
+该函数启动一个静态文件服务器，监听指定端口，并在指定文件夹路径下寻找文件并返回给请求者。如果请求的路径是一个目录，则返回默认主页。
 
-###API��ʽ
-ʹ��API��ʽʱ����
+### API形式
+使用API形式时请用
 ```javascript
 const RemoteFunctionServer = require(: "./Server/RemoteFunctionServer");
 const AddServer = require("./Server/StaticServer.js").AddServer;
 ```
-����ͬ��
-## ʾ��
+功能同上
+## 示例
 
-����������� Node.js ��Ŀ��ʹ�� LittleFox-Server ��ʾ�����룺
+以下是如何在 Node.js 项目中使用 LittleFox-Server 的示例代码：
 
 ```javascript
 const RemoteFunctionServer = require("./Server/RemoteFunctionServer");
 const AddServer = require("./Server/StaticServer.js").AddServer;
 
-// ����Զ�̺���������
+// 启动远程函数服务器
 const port = 8080;
 const path = "/path/to/dir";
 RemoteFunctionServer(port, path);
 
-// ������̬�ļ�������
+// 启动静态文件服务器
 const dir_path = "/path/to/dir";
 const default_homepage = "/path/to/default/homepage.html";
 AddServer(80, dir_path, default_homepage);
 ```
 
-��δ���������һ��Զ�̺����������������˿� 8080������ `/path/to/dir` Ŀ¼�в���Ҫִ�еĺ�������������һ����̬�ļ��������������˿� 80������ `/path/to/dir` Ŀ¼�е��ļ����ظ������ߡ���������·����һ��Ŀ¼����ʹ�� `/path/to/default/homepage.html` �ļ���ΪĬ����ҳ��
+这段代码启动了一个远程函数服务器，监听端口 8080，并在 `/path/to/dir` 目录中查找要执行的函数。还启动了一个静态文件服务器，监听端口 80，并将 `/path/to/dir` 目录中的文件返回给请求者。如果请求的路径是一个目录，则使用 `/path/to/default/homepage.html` 文件作为默认主页。
 
 # LittleFox-Server
 
