@@ -1,38 +1,28 @@
-const RemoteFunctionServer = require(: "./Server/RemoteFunctionServer");
+const RemoteFunctionServer = require("./Server/RemoteFunctionServer");
 const AddServer = require("./Server/StaticServer.js").AddServer;
-process.stdin.resume();
-process.stdin.setEncoding('utf8');
+const readline = require('readline');
 
-process.stdin.on('data', function (data) {
-  // 解析控制台输入
-  var input = data.trim().split(' ');
-  var command = input[0];
-  var options = {};
-  // 解析指令参数
-  for (var i = 1; i < input.length; i += 2) {
-    var key = input[i].replace(/^-+/, '');
-    var value = input[i + 1];
-    options[key] = value;
-  }
-  // 执行对应的函数
-  switch (command) {
-    case 'remote':
-      RemoteFunctionServer(options.port || 26688, options.dir_path);
-      break;
-    case 'server':
-      AddServer(options.port, options.dir_path, options.default_homepage);
-      break;
-    default:
-      console.log('Unknown command: ' + command);
-  }
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
 });
 
-function RemoteFunctionServer(port, path) {
-  // 在这里编写 RemoteFunctionServer 的代码
-  console.log('RemoteFunctionServer is running on port ' + port + ' with path ' + path);
-}
+console.log("请输入具体指令");
 
-function AddServer(port, dir_path, default_homepage) {
-  // 在这里编写 AddServer 的代码
-  console.log('Server is running on port ' + port + ' with dir_path ' + dir_path + ' and default_homepage ' + default_homepage);
-}
+rl.on('line', (input) => {
+  const args = input.split(" ");
+  const command = args[0];
+  if (command === "start") {
+    const port = args[1] || 8080;
+    const path = args[2] || ".";
+    const server = new RemoteFunctionServer(port, path);
+    server.start();
+  } else if (command === "serve") {
+    const port = args[1] || 80;
+    const dir_path = args[2] || ".";
+    const default_homepage = args[3] || "index.html";
+    AddServer(port, dir_path, default_homepage);
+  } else {
+    console.log("无效指令，请重新输入");
+  }
+});

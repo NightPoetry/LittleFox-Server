@@ -1,0 +1,14 @@
+{
+  "name": "littlefox-server",
+  "version": "1.0.0",
+  "description": "a small web server，can use cli or api to run",
+  "main": "Main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.14.2"
+  }
+}

@@ -1,5 +1,9 @@
 # LittleFox-Server
 a small web server锛宑an use cli or api to run.
+## Init（初始化）
+ ```bash
+ $ npm init
+ ```
 ## 控制台命令行工具
 
 这是一个基于控制台的命令行工具，支持以下两个指令：
@@ -12,13 +16,15 @@ a small web server锛宑an use cli or api to run.
 可以通过控制台输入以下指令来使用该工具：
 
 ```bash
-$ node Main.js remote -d /path/to/dir -p 8080
+$ node Main.js
+ remote -d /path/to/dir -p 8080
 ```
 
 上面的指令会启动一个远程函数服务器，监听 8080 端口，并在 `/path/to/dir` 目录下寻找函数并执行。
 
 ```bash
-$ node cli.js server -d /path/to/dir -p 8080 -h /path/to/default/homepage.html
+$ node Main.js
+ server -d /path/to/dir -p 8080 -h /path/to/default/homepage.html
 ```
 
 上面的指令会启动一个静态文件服务器，监听 8080 端口，并在 `/path/to/dir` 目录下寻找文件并返回给请求者。如果请求的路径是一个目录，则返回 `/path/to/default/homepage.html` 文件。
@@ -53,7 +59,7 @@ $ node cli.js server -d /path/to/dir -p 8080 -h /path/to/default/homepage.html
 
 该函数启动一个静态文件服务器，监听指定端口，并在指定文件夹路径下寻找文件并返回给请求者。如果请求的路径是一个目录，则返回默认主页。
 
-###API形式
+### API形式
 使用API形式时请用
 ```javascript
 const RemoteFunctionServer = require(: "./Server/RemoteFunctionServer");
@@ -93,13 +99,15 @@ LittleFox-Server is a small web server that can be run using both CLI and API. I
 You can use the following commands in the CLI to use this tool:
 
 ```bash
-$ node Main.js remote -d /path/to/dir -p 8080
+$ node Main.js
+ remote -d /path/to/dir -p 8080
 ```
 
 This command starts a remote function server that listens on port 8080 and looks for functions to execute in the `/path/to/dir` directory.
 
 ```bash
-$ node cli.js server -d /path/to/dir -p 8080 -h /path/to/default/homepage.html
+$ node Main.js
+ server -d /path/to/dir -p 8080 -h /path/to/default/homepage.html
 ```
 
 This command starts a static file server that listens on port 8080 and returns files in the `/path/to/dir` directory to the requester. If the requested path is a directory, use the `/path/to/default/homepage.html` file as the homepage.
