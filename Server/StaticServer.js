@@ -44,6 +44,7 @@ function StaticServer(port, dir_path, default_homepage = "index.html") {
 function AddServer(port, dir_path, default_homepage = "index.html") {
 	history.push(arguments);//记得electron也要使用一次记录，然后所谓的重启直接在electron端重启koa进程即可，不需要在这里重启。
 	StaticServer(...arguments);
+	return {url:`/${path.basename(dir_path)}/${default_homepage}`}
 }
 function RunningPageMessage() {
 	function ProjectMessage(port, dir_path) {
