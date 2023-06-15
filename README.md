@@ -14,17 +14,18 @@ a small web server, can use cli or api to run.
 ### 使用方法
 
 可以通过控制台输入以下指令来使用该工具：
+注意带有空格的路径需要用引号引用起来。
 
 ```bash
 $ node Main.js
- remote -d /path/to/dir -p 8080
+ remote -d "/path/to/dir" -p 8080
 ```
 
 上面的指令会启动一个远程函数服务器，监听 8080 端口，并在 `/path/to/dir` 目录下寻找函数并执行。
 
 ```bash
 $ node Main.js
- server -d /path/to/dir -p 8080 -h /path/to/default/homepage.html
+ server -d "/path/to/dir" -p 8080 -h "/path/to/default/homepage.html"
 ```
 
 上面的指令会启动一个静态文件服务器，监听 8080 端口，并在 `/path/to/dir` 目录下寻找文件并返回给请求者。如果请求的路径是一个目录，则返回 `/path/to/default/homepage.html` 文件。
@@ -97,6 +98,7 @@ LittleFox-Server is a small web server that can be run using both CLI and API. I
 ## Usage
 
 You can use the following commands in the CLI to use this tool:
+Please use quotation marks to enclose paths that contain spaces.
 
 ```bash
 $ node Main.js
