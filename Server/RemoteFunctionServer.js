@@ -8,14 +8,15 @@ const Router = require("koa-router");
 const bodyParser = require('koa-bodyparser')
 const TraversingDir = require("./Tool/traverseDir.js");
 const router = new Router();
+const PortPool = require('./Tool/PortPool.js');
+const port_pool = new PortPool();
 let func_dir_path_set = new Set()
-let port_pool = new Set()
 /**
  * @param {String} server_path 远程方法服务文件夹路径
  * @param {String} server_port 远程方法服务端口
  */
 function RemoteFunctionServer(server_port, server_path) {
-	let app = new Koa()
+	let app = port_pool.addPort(server_port);
 	let root_func_name = path.basename(server_path)
 	if (func_dir_path_set.has(root_func_name)) {
 		console.error("方法路径重复，或方法文件夹已经被加载过！")
@@ -46,11 +47,7 @@ function RemoteFunctionServer(server_port, server_path) {
 	}, () => {
 		app.use(router.routes())
 		console.log("远程函数路由添加成功！");
-	})
-	if (!port_pool.has(server_port)) {
-		app.listen(server_port);
-		port_pool.add(server_port);
-	}
+	});
 }
 //远程方法调用格式：单例名，方法名，参数对象
 module.exports = RemoteFunctionServer

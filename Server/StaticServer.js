@@ -4,48 +4,36 @@ const static = require("koa-static")
 const mount = require('koa-mount');
 const Router = require('koa-router');
 const fs = require('fs-extra');
+const http = require("http");
+const ws = require('ws')
 const {
 	basename
 } = require("path");
-let port_pool = new Set()
 let router_pool = new Map(); //key = port
 let pathMessage = new Map(); //key = router
-let app_pool = new Map(); //key = port
-let history = [];//历史指令
+let history = []; //历史指令
+const PortPool = require('./Tool/PortPool.js');
+const port_pool = new PortPool();
+
 function StaticServer(port, dir_path, default_homepage = "index.html") {
 	//不同的port用不同的app，这样同一个项目可以在多个端口开放。
 	const router = new Router();
-	let app = new Koa();
+	let app = port_pool.addPort(port);
 	router.get(`/${path.basename(dir_path)}`, async (ctx) => {
 		ctx.response.redirect(`/${path.basename(dir_path)}/${default_homepage}`);
 	})
 	app.use(router.routes())
 	app.use(mount(`/${path.basename(dir_path)}`, static(dir_path)))
-	if (!port_pool.has(port)) {
-		app.listen(port);
-		port_pool.add(port);
-		router_pool.set(port, router);
-		app_pool.set(port, app);
-		pathMessage.set(router, dir_path);
-	} else {
-		let router = router_pool.get(port);
-		let app = app_pool.get(port);
-		router.get(`/${path.basename(dir_path)}`, async (ctx) => {
-			ctx.response.redirect(`/${path.basename(dir_path)}/${default_homepage}`);
-			// ctx.res.writeHead(200);
-			// ctx.res.write(fs.readFileSync(path.join(dir_path, "./" + default_homepage)), 'binary')
-			// ctx.res.end();
-		})
-		app.use(router.routes())
-		app.use(mount(`/${path.basename(dir_path)}`, static(dir_path)))
-	}
 }
 //开启服务
 function AddServer(port, dir_path, default_homepage = "index.html") {
-	history.push(arguments);//记得electron也要使用一次记录，然后所谓的重启直接在electron端重启koa进程即可，不需要在这里重启。
+	history.push(arguments); //记得electron也要使用一次记录，然后所谓的重启直接在electron端重启koa进程即可，不需要在这里重启。
 	StaticServer(...arguments);
-	return {url:`/${path.basename(dir_path)}/${default_homepage}`}
+	return {
+		url: `/${path.basename(dir_path)}/${default_homepage}`
+	}
 }
+
 function RunningPageMessage() {
 	function ProjectMessage(port, dir_path) {
 		this.port = port;
